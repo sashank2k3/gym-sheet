@@ -46,78 +46,122 @@
   </div>
 </div><script>
   const workouts = {
-    monday: {
-      title: 'Monday – Chest + Triceps + Cardio',
-      data: [
-        ['Warm-up', 'Light cardio + mobility drills', '10 mins'],
-        ['Bench Press', 'Bar to mid-chest, press up with control', '4 × 8–10'],
-        ['Incline Dumbbell Press', 'Upper chest focus, controlled reps', '4 × 10'],
-        ['Cable Fly', 'Stretch chest, squeeze at center', '4 × 12–15'],
-        ['Triceps Pushdown', 'Elbows tight, full extension', '4 × 12–15'],
-        ['Overhead Triceps Extension', 'Deep stretch, slow reps', '4 × 12'],
-        ['Cardio', 'Treadmill / cycle moderate intensity', '15–20 mins']
-      ]
-    },
-    tuesday: {
-      title: 'Tuesday – Back + Biceps + Cardio',
-      data: [
-        ['Warm-up', 'Band pulls + light rowing', '10 mins'],
-        ['Lat Pulldown / Pull-ups', 'Pull chest to handle/bar', '4 × 8–12'],
-        ['Seated Cable Row', 'Elbows back, squeeze lats', '4 × 10–12'],
-        ['Barbell Row', 'Flat back, pull to waist', '4 × 8–10'],
-        ['Barbell Curl', 'No swinging, full range', '4 × 10'],
-        ['Hammer Curl', 'Neutral grip, controlled', '4 × 12'],
-        ['Cardio', 'Treadmill / cross trainer', '15–20 mins']
-      ]
-    },
-    wednesday: {
-      title: 'Wednesday – Legs + Shoulders',
-      data: [
-        ['Warm-up', 'Cycling + leg mobility', '10 mins'],
-        ['Squats', 'Sit till parallel, push through heels', '4 × 8–10'],
-        ['Leg Press', 'Slow descent, no knee lock', '4 × 12'],
-        ['Leg Extension', 'Squeeze quads at top', '4 × 12–15'],
-        ['Leg Curl', 'Controlled hamstring squeeze', '4 × 12–15'],
-        ['Standing Calf Raises', 'Pause at top', '4 × 15–20'],
-        ['Shoulder Press', 'Overhead press, core tight', '4 × 8–10'],
-        ['Lateral Raises', 'Raise to shoulder height', '4 × 12–15']
-      ]
-    },
-    thursday: {
-      title: 'Thursday – Chest + Triceps',
-      data: [
-        ['Warm-up', 'Light push movements', '10 mins'],
-        ['Incline Bench Press', 'Upper chest focus', '4 × 8–10'],
-        ['Flat Dumbbell Press', 'Deep stretch, controlled', '4 × 10'],
-        ['Pec Deck / Fly', 'Constant tension', '4 × 12–15'],
-        ['Skull Crushers', 'Lower slowly to forehead', '4 × 10–12'],
-        ['Rope Pushdown', 'Squeeze triceps hard', '4 × 12–15']
-      ]
-    },
-    friday: {
-      title: 'Friday – Biceps + Cardio',
-      data: [
-        ['Warm-up', 'Light curls + mobility', '5–10 mins'],
-        ['EZ-Bar Curl', 'Full range, slow reps', '4 × 10–12'],
-        ['Incline Dumbbell Curl', 'Stretch biceps fully', '4 × 12'],
-        ['Preacher Curl', 'Strict form, no cheating', '3 × 10–12'],
-        ['Cable Curl', 'Constant tension', '3 × 12–15'],
-        ['Cardio', 'HIIT or steady-state', '20 mins']
-      ]
-    },
-    saturday: {
-      title: 'Saturday – Legs + Shoulders + CrossFit',
-      data: [
-        ['Warm-up', 'Dynamic stretching + skipping', '10 mins'],
-        ['Deadlift', 'Neutral spine, hip drive', '4 × 6–8'],
-        ['Walking Lunges', 'Long steps, knee control', '4 × 20 steps'],
-        ['Leg Curl', 'Hamstring isolation', '4 × 12'],
-        ['Arnold Press', 'Rotate dumbbells while pressing', '4 × 10'],
-        ['Rear Delt Fly', 'Squeeze rear delts', '4 × 12–15'],
-        ['CrossFit / HIIT', 'Burpees, box jumps, ropes', '15–20 mins']
-      ]
-    }
-  };
+  monday: {
+    title: 'Monday – Chest + Triceps + Cardio',
+    data: [
+      ['Warmup', 'Light cardio and joint mobility to raise heart rate', '10 × 1 | Rest 30s'],
+      ['Tree Pose - Yoga', 'Stand on one leg, foot on inner thigh, hands overhead, balance and breathe', '30s × 3 | Rest 30s'],
+      ['Bird Dog - Stability', 'On all fours, extend opposite arm and leg, keep spine neutral', '10 × 3 | Rest 30s'],
+      ['Dumbbell Chest Fly', 'Lie on bench, lower DBs wide, squeeze chest to bring together', '12 × 4 | Rest 30s'],
+      ['Svend Press', 'Hold plates together and press forward maintaining chest squeeze', '12 × 4 | Rest 30s'],
+      ['Cable Cross Upper Chest', 'Low-to-high cable fly focusing upper chest', '12 × 4 | Rest 30s'],
+      ['Butterfly (Pec Deck)', 'Bring handles together slowly, control return', '15 × 4 | Rest 30s'],
+      ['Tricep Dips', 'Lower body by bending elbows, push up using triceps', '12 × 4 | Rest 30s'],
+      ['Overhead Triceps Extension', 'Extend elbows overhead focusing long head', '12 × 4 | Rest 30s'],
+      ['Skull Crushers', 'Lower bar/DB to forehead, extend elbows', '12 × 4 | Rest 30s'],
+      ['Triceps Kickback', 'Extend arm backward squeezing triceps', '12 × 4 | Rest 30s'],
+      ['Skipping', 'Fast rope jumps to elevate heart rate', '50 × 3 | Rest 90s'],
+      ['High Knees', 'Run in place lifting knees high', '30 × 3 | Rest 90s'],
+      ['Kettlebell Swing', 'Hip hinge swing using glutes and hips', '15 × 3 | Rest 30s'],
+      ['Cool Down', 'Stretch chest, arms and slow breathing', '1 × 1 | Rest 90s']
+    ]
+  },
+  tuesday: {
+    title: 'Tuesday – Back + Biceps + Cardio',
+    data: [
+      ['Warmup', 'Neck, shoulder, torso mobility drills', '10 × 1 | Rest 30s'],
+      ['Warrior 2 Pose - Yoga', 'Wide stance, knee bent, arms extended, hold posture', '30s × 3 | Rest 30s'],
+      ['Dead Bug - Core', 'Extend opposite arm and leg while bracing core', '10 × 3 | Rest 30s'],
+      ['Bent Over Dumbbell Row', 'Hinge hips, pull DBs toward waist', '12 × 4 | Rest 30s'],
+      ['Single Arm Row', 'Support on bench, pull DB toward hip', '12 × 4 | Rest 30s'],
+      ['Lat Pulldown Wide Grip', 'Pull bar to chest squeezing lats', '12 × 4 | Rest 30s'],
+      ['Seated Row Machine', 'Pull handle to abdomen, squeeze mid-back', '12 × 4 | Rest 30s'],
+      ['Face Pull', 'Pull rope to face, elbows high', '15 × 4 | Rest 30s'],
+      ['Barbell Curl', 'Curl bar without swinging body', '12 × 4 | Rest 30s'],
+      ['Hammer Curl', 'Neutral grip curl focusing control', '12 × 4 | Rest 30s'],
+      ['Concentration Curl', 'Single arm seated curl squeezing peak', '12 × 4 | Rest 30s'],
+      ['Reverse Dumbbell Curl', 'Overhand curl for forearms', '12 × 4 | Rest 30s'],
+      ['Burpees with Pushup', 'Squat, jump back, pushup, jump up', '45 × 3 | Rest 90s'],
+      ['Star Jumps', 'Explosive jumping with arms and legs spread', '45 × 3 | Rest 90s'],
+      ['Cool Down', 'Stretch back and arms', '1 × 3 | Rest 90s']
+    ]
+  },
+  wednesday: {
+    title: 'Wednesday – Legs + Shoulders',
+    data: [
+      ['Warmup', 'Lower body mobility and light cardio', '10 × 1 | Rest 30s'],
+      ['Chair Pose - Yoga', 'Squat hold with arms overhead', '30s × 3 | Rest 30s'],
+      ['Glute Bridge', 'Lift hips squeezing glutes', '12 × 3 | Rest 30s'],
+      ['Goblet Squat', 'Hold DB close to chest and squat deep', '12 × 4 | Rest 30s'],
+      ['Bulgarian Split Squat', 'Rear foot elevated, squat on front leg', '10 × 4 | Rest 30s'],
+      ['Forward Lunges', 'Step forward, knee down, push back', '10 × 4 | Rest 30s'],
+      ['Romanian Deadlift', 'Hip hinge, stretch hamstrings', '12 × 4 | Rest 30s'],
+      ['Standing Calf Raises', 'Rise on toes, pause, lower slowly', '15 × 4 | Rest 30s'],
+      ['Side Lateral Raise', 'Raise DBs to shoulder height', '12 × 4 | Rest 30s'],
+      ['Front Raise', 'Lift DBs straight in front', '12 × 4 | Rest 30s'],
+      ['Rear Delt Fly', 'Hinge forward, open arms squeezing rear delts', '12 × 4 | Rest 30s'],
+      ['Upright Row', 'Pull bar upward with elbows high', '12 × 4 | Rest 30s'],
+      ['Jump Squats', 'Explosive squat jumps', '15 × 3 | Rest 60s'],
+      ['Butt Kicks', 'Run in place kicking heels back', '20 × 3 | Rest 60s'],
+      ['Full Body Mobility', 'Dynamic stretching for recovery', '15 × 3 | Rest 60s'],
+      ['Cool Down', 'Stretch legs and shoulders', '1 × 3 | Rest 90s']
+    ]
+  },
+  thursday: {
+    title: 'Thursday – Chest + Triceps',
+    data: [
+      ['Warmup', 'Upper body mobility and stretches', '10 × 1 | Rest 30s'],
+      ['Cobra Stretch - Yoga', 'Lie prone and extend spine upward', '30s × 3 | Rest 30s'],
+      ['Russian Twist', 'Seated torso rotation engaging core', '12 × 3 | Rest 30s'],
+      ['Incline DB Chest Fly', 'Incline bench fly squeezing upper chest', '12 × 4 | Rest 30s'],
+      ['Svend Press (Plates)', 'Plate squeeze press focusing chest', '12 × 4 | Rest 30s'],
+      ['Cable Cross Middle Chest', 'Cable fly at chest height', '12 × 4 | Rest 30s'],
+      ['Decline Bench Press', 'Press bar on decline bench', '12 × 4 | Rest 30s'],
+      ['Close Grip Bench Press', 'Narrow grip bench press for triceps', '12 × 4 | Rest 30s'],
+      ['Skull Crushers', 'Lying triceps extension', '12 × 4 | Rest 30s'],
+      ['Triceps Pushdown Straight Rod', 'Push bar down extending elbows', '12 × 4 | Rest 30s'],
+      ['Overhead Triceps Extension', 'Extend elbows overhead', '12 × 4 | Rest 30s'],
+      ['Jumping Jacks', 'Full body cardio jumps', '45 × 3 | Rest 90s'],
+      ['Mountain Climbers', 'Fast knee drives in plank position', '30 × 3 | Rest 90s'],
+      ['TRX Chest Fly', 'Suspended chest fly using bodyweight', '12 × 3 | Rest 30s'],
+      ['Cool Down', 'Stretch chest and arms', '1 × 1 | Rest 90s']
+    ]
+  },
+  friday: {
+    title: 'Friday – Biceps + Cardio',
+    data: [
+      ['EZ Bar Curl', 'Curl bar with controlled motion', '12 × 4 | Rest 30s'],
+      ['Incline Dumbbell Curl', 'Curl DBs on incline bench', '12 × 4 | Rest 30s'],
+      ['Zottman Curl', 'Curl up supinated, lower pronated', '12 × 4 | Rest 30s'],
+      ['21s Curl', '7 bottom, 7 top, 7 full reps', '21 × 3 | Rest 90s'],
+      ['Skater Jumps', 'Side to side explosive jumps', '45 × 3 | Rest 90s'],
+      ['Plank Jacks on Stepper', 'Plank with jumping feet', '30 × 3 | Rest 90s'],
+      ['Kettlebell Snatch', 'Explosive KB pull overhead', '10 × 3 | Rest 30s'],
+      ['Cool Down', 'Stretch arms and slow breathing', '1 × 1 | Rest 90s']
+    ]
+  },
+  saturday: {
+    title: 'Saturday – Legs + Shoulders + CrossFit',
+    data: [
+      ['Warmup', 'Light cardio and mobility', '10 × 1 | Rest 30s'],
+      ['Bridge Pose - Yoga', 'Lift hips while breathing deeply', '30s × 3 | Rest 30s'],
+      ['Bicycle Crunch', 'Alternating elbow to knee core movement', '24 × 3 | Rest 30s'],
+      ['Sumo Squat (Dumbbells)', 'Wide stance squat targeting inner thighs', '12 × 4 | Rest 30s'],
+      ['Single Leg RDL (Kettlebell)', 'Hip hinge on one leg', '10 × 4 | Rest 30s'],
+      ['Leg Press', 'Press platform without locking knees', '15 × 4 | Rest 30s'],
+      ['Calf Stretch', 'Stretch calves slowly', '15 × 4 | Rest 30s'],
+      ['Arnold Press (Seated)', 'Rotate DBs while pressing overhead', '12 × 4 | Rest 30s'],
+      ['Overhead Shoulder Press', 'Press weight overhead with control', '12 × 4 | Rest 30s'],
+      ['Front Raise Plate', 'Lift plate straight in front', '12 × 4 | Rest 30s'],
+      ['Face Pull', 'Pull rope to face squeezing rear delts', '12 × 4 | Rest 30s'],
+      ['Lateral Raise Dropset', '12-8-6 reps without rest', '26 × 4 | Rest 90s'],
+      ['Ladder Side Drills', 'Agility ladder side movements', '5 × 3 | Rest 60s'],
+      ['Lateral Cone Shuffle', 'Quick side shuffle between cones', '10 × 3 | Rest 30s'],
+      ['Bulgarian Bag Side Swipe', 'Rotate bag side to side using core', '30 × 3 | Rest 30s'],
+      ['Cool Down', 'Full body stretching', '1 × 1 | Rest 90s']
+    ]
+  }
+};
 
   function showDay(day) {
     document.getElementById('daysView').classList.add('hidden');
