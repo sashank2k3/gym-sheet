@@ -47,57 +47,74 @@
 </div><script>
   const workouts = {
     monday: {
-      title: 'Monday – Chest & Triceps',
+      title: 'Monday – Chest + Triceps + Cardio',
       data: [
-        ['Bench Press', 'Lower bar to mid-chest, press up powerfully', '4 × 8–10'],
-        ['Incline Dumbbell Press', 'Press upward at 30–45° angle', '4 × 10'],
-        ['Chest Fly', 'Stretch chest, squeeze at center', '4 × 12'],
-        ['Triceps Pushdown', 'Elbows tight, extend fully', '4 × 12–15'],
-        ['Overhead Triceps Extension', 'Stretch triceps fully overhead', '4 × 12']
+        ['Warm-up', 'Light cardio + mobility drills', '10 mins'],
+        ['Bench Press', 'Bar to mid-chest, press up with control', '4 × 8–10'],
+        ['Incline Dumbbell Press', 'Upper chest focus, controlled reps', '4 × 10'],
+        ['Cable Fly', 'Stretch chest, squeeze at center', '4 × 12–15'],
+        ['Triceps Pushdown', 'Elbows tight, full extension', '4 × 12–15'],
+        ['Overhead Triceps Extension', 'Deep stretch, slow reps', '4 × 12'],
+        ['Cardio', 'Treadmill / cycle moderate intensity', '15–20 mins']
       ]
     },
     tuesday: {
-      title: 'Tuesday – Back & Biceps',
+      title: 'Tuesday – Back + Biceps + Cardio',
       data: [
-        ['Pull-Ups / Lat Pulldown', 'Pull chest to bar/handle', '4 × 8–12'],
-        ['Seated Row', 'Pull elbows back, squeeze lats', '4 × 10–12'],
-        ['Barbell Curl', 'Curl without swinging', '4 × 10'],
-        ['Hammer Curl', 'Neutral grip, control reps', '4 × 12']
+        ['Warm-up', 'Band pulls + light rowing', '10 mins'],
+        ['Lat Pulldown / Pull-ups', 'Pull chest to handle/bar', '4 × 8–12'],
+        ['Seated Cable Row', 'Elbows back, squeeze lats', '4 × 10–12'],
+        ['Barbell Row', 'Flat back, pull to waist', '4 × 8–10'],
+        ['Barbell Curl', 'No swinging, full range', '4 × 10'],
+        ['Hammer Curl', 'Neutral grip, controlled', '4 × 12'],
+        ['Cardio', 'Treadmill / cross trainer', '15–20 mins']
       ]
     },
     wednesday: {
-      title: 'Wednesday – Legs & Shoulders',
+      title: 'Wednesday – Legs + Shoulders',
       data: [
-        ['Squats', 'Sit down till parallel, push through heels', '4 × 8–10'],
-        ['Leg Press', 'Lower slow, press without locking knees', '4 × 12'],
-        ['Lunges', 'Step forward, knee close to floor', '4 × 20 steps'],
-        ['Shoulder Press', 'Press overhead, core tight', '4 × 8–10'],
-        ['Lateral Raises', 'Lift to shoulder height', '4 × 15']
+        ['Warm-up', 'Cycling + leg mobility', '10 mins'],
+        ['Squats', 'Sit till parallel, push through heels', '4 × 8–10'],
+        ['Leg Press', 'Slow descent, no knee lock', '4 × 12'],
+        ['Leg Extension', 'Squeeze quads at top', '4 × 12–15'],
+        ['Leg Curl', 'Controlled hamstring squeeze', '4 × 12–15'],
+        ['Standing Calf Raises', 'Pause at top', '4 × 15–20'],
+        ['Shoulder Press', 'Overhead press, core tight', '4 × 8–10'],
+        ['Lateral Raises', 'Raise to shoulder height', '4 × 12–15']
       ]
     },
     thursday: {
-      title: 'Thursday – Chest & Triceps',
+      title: 'Thursday – Chest + Triceps',
       data: [
-        ['Incline Bench Press', 'Focus upper chest', '4 × 8–10'],
-        ['Cable Fly', 'Constant tension squeeze', '4 × 12'],
-        ['Skull Crushers', 'Lower to forehead carefully', '4 × 10–12']
+        ['Warm-up', 'Light push movements', '10 mins'],
+        ['Incline Bench Press', 'Upper chest focus', '4 × 8–10'],
+        ['Flat Dumbbell Press', 'Deep stretch, controlled', '4 × 10'],
+        ['Pec Deck / Fly', 'Constant tension', '4 × 12–15'],
+        ['Skull Crushers', 'Lower slowly to forehead', '4 × 10–12'],
+        ['Rope Pushdown', 'Squeeze triceps hard', '4 × 12–15']
       ]
     },
     friday: {
-      title: 'Friday – Biceps & Cardio',
+      title: 'Friday – Biceps + Cardio',
       data: [
-        ['EZ Bar Curl', 'Full range curls', '4 × 10–12'],
-        ['Concentration Curl', 'Isolate one arm at a time', '3 × 12'],
-        ['Treadmill / Cycling', 'Moderate to high intensity', '20–30 mins']
+        ['Warm-up', 'Light curls + mobility', '5–10 mins'],
+        ['EZ-Bar Curl', 'Full range, slow reps', '4 × 10–12'],
+        ['Incline Dumbbell Curl', 'Stretch biceps fully', '4 × 12'],
+        ['Preacher Curl', 'Strict form, no cheating', '3 × 10–12'],
+        ['Cable Curl', 'Constant tension', '3 × 12–15'],
+        ['Cardio', 'HIIT or steady-state', '20 mins']
       ]
     },
     saturday: {
-      title: 'Saturday – Legs, Shoulders & CrossFit',
+      title: 'Saturday – Legs + Shoulders + CrossFit',
       data: [
-        ['Deadlift', 'Flat back, push hips forward', '4 × 6–8'],
-        ['Leg Curl', 'Squeeze hamstrings', '4 × 12'],
+        ['Warm-up', 'Dynamic stretching + skipping', '10 mins'],
+        ['Deadlift', 'Neutral spine, hip drive', '4 × 6–8'],
+        ['Walking Lunges', 'Long steps, knee control', '4 × 20 steps'],
+        ['Leg Curl', 'Hamstring isolation', '4 × 12'],
         ['Arnold Press', 'Rotate dumbbells while pressing', '4 × 10'],
-        ['CrossFit Circuit', 'Burpees, box jumps, battle rope', '15–20 mins']
+        ['Rear Delt Fly', 'Squeeze rear delts', '4 × 12–15'],
+        ['CrossFit / HIIT', 'Burpees, box jumps, ropes', '15–20 mins']
       ]
     }
   };
