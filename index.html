@@ -1,195 +1,121 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Weekly Workout Plan</title>
   <style>
-    :root {--bg:#0f1724;--card:#0b1220;--muted:#9aa7b2;--accent:#3ddc97;--glass: rgba(255,255,255,0.03);}
-    body {margin:0;background:linear-gradient(180deg,#071427 0%,#0b2434 100%);color:#e6eef3;font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica Neue,Arial;-webkit-font-smoothing:antialiased;}
-    .container{max-width:900px;margin:auto;padding:18px;}
-    header{display:flex;align-items:center;gap:12px;margin-bottom:12px}
-    h1{font-size:20px;margin:0}
-    p.lead{color:var(--muted);font-size:13px;margin:0}
-    .day-card{background:var(--card);border-radius:12px;padding:12px;margin:10px 0;box-shadow:0 6px 18px rgba(2,6,23,0.6)}
-    .day-row{display:flex;justify-content:space-between;align-items:center;cursor:pointer}
-    .day-title{font-weight:700;font-size:16px}
-    .toggle{background:var(--glass);border-radius:8px;padding:6px 10px;font-size:13px;border:1px solid rgba(255,255,255,0.04)}
-    .section-title{font-size:13px;color:var(--accent);margin-top:10px;margin-bottom:6px}
-    table{width:100%;border-collapse:collapse;font-size:13px}
-    th,td{padding:6px;text-align:left;border-bottom:1px solid rgba(255,255,255,0.03)}
-    th{font-size:12px;color:var(--muted)}
-    .notes{font-size:12px;color:var(--muted)}
-    .controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
-    .btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 10px;border-radius:10px;font-size:13px;color:inherit}
-    @media (max-width:520px){.container{padding:12px}h1{font-size:18px}th,td{font-size:12px}}
-    footer{margin:18px 0 60px;color:var(--muted);font-size:13px;text-align:center}
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+    body { margin: 0; background: #0f172a; color: #e5e7eb; }
+    header { padding: 20px; text-align: center; font-size: 28px; font-weight: 600; background: #020617; }
+    .container { padding: 20px; max-width: 1100px; margin: auto; }
+    .days { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; }
+    .day-card { background: #020617; border-radius: 12px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; box-shadow: 0 10px 25px rgba(0,0,0,0.4); }
+    .day-card:hover { transform: translateY(-5px); background: #1e293b; }
+    .hidden { display: none; }
+    .back-btn { margin-bottom: 20px; cursor: pointer; color: #38bdf8; }
+    table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+    th, td { padding: 12px; border-bottom: 1px solid #334155; text-align: left; }
+    th { background: #020617; }
+    tr:hover { background: #1e293b; }
+    h2 { margin-top: 0; }
   </style>
 </head>
 <body>
-<div class="container">
-<header>
-  <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#042036,#0b2940);display:flex;align-items:center;justify-content:center;font-weight:700;">W</div>
-  <div>
-    <h1>Weekly Workout Plan</h1>
-    <p class="lead">Tap any day to expand. Mobile-optimized & offline ready.</p>
+<header>🏋️ Weekly Gym Workout Plan</header><div class="container">
+  <!-- Days View -->
+  <div id="daysView" class="days">
+    <div class="day-card" onclick="showDay('monday')">Monday<br><small>Chest + Triceps</small></div>
+    <div class="day-card" onclick="showDay('tuesday')">Tuesday<br><small>Back + Biceps</small></div>
+    <div class="day-card" onclick="showDay('wednesday')">Wednesday<br><small>Legs + Shoulders</small></div>
+    <div class="day-card" onclick="showDay('thursday')">Thursday<br><small>Chest + Triceps</small></div>
+    <div class="day-card" onclick="showDay('friday')">Friday<br><small>Biceps + Cardio</small></div>
+    <div class="day-card" onclick="showDay('saturday')">Saturday<br><small>Legs + Shoulders + CrossFit</small></div>
+  </div>  <!-- Workout View -->  <div id="workoutView" class="hidden">
+    <div class="back-btn" onclick="goBack()">⬅ Back to Days</div>
+    <h2 id="dayTitle"></h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Exercise</th>
+          <th>Description</th>
+          <th>Sets & Reps</th>
+        </tr>
+      </thead>
+      <tbody id="workoutTable"></tbody>
+    </table>
   </div>
-</header>
+</div><script>
+  const workouts = {
+    monday: {
+      title: 'Monday – Chest & Triceps',
+      data: [
+        ['Bench Press', 'Lower bar to mid-chest, press up powerfully', '4 × 8–10'],
+        ['Incline Dumbbell Press', 'Press upward at 30–45° angle', '4 × 10'],
+        ['Chest Fly', 'Stretch chest, squeeze at center', '4 × 12'],
+        ['Triceps Pushdown', 'Elbows tight, extend fully', '4 × 12–15'],
+        ['Overhead Triceps Extension', 'Stretch triceps fully overhead', '4 × 12']
+      ]
+    },
+    tuesday: {
+      title: 'Tuesday – Back & Biceps',
+      data: [
+        ['Pull-Ups / Lat Pulldown', 'Pull chest to bar/handle', '4 × 8–12'],
+        ['Seated Row', 'Pull elbows back, squeeze lats', '4 × 10–12'],
+        ['Barbell Curl', 'Curl without swinging', '4 × 10'],
+        ['Hammer Curl', 'Neutral grip, control reps', '4 × 12']
+      ]
+    },
+    wednesday: {
+      title: 'Wednesday – Legs & Shoulders',
+      data: [
+        ['Squats', 'Sit down till parallel, push through heels', '4 × 8–10'],
+        ['Leg Press', 'Lower slow, press without locking knees', '4 × 12'],
+        ['Lunges', 'Step forward, knee close to floor', '4 × 20 steps'],
+        ['Shoulder Press', 'Press overhead, core tight', '4 × 8–10'],
+        ['Lateral Raises', 'Lift to shoulder height', '4 × 15']
+      ]
+    },
+    thursday: {
+      title: 'Thursday – Chest & Triceps',
+      data: [
+        ['Incline Bench Press', 'Focus upper chest', '4 × 8–10'],
+        ['Cable Fly', 'Constant tension squeeze', '4 × 12'],
+        ['Skull Crushers', 'Lower to forehead carefully', '4 × 10–12']
+      ]
+    },
+    friday: {
+      title: 'Friday – Biceps & Cardio',
+      data: [
+        ['EZ Bar Curl', 'Full range curls', '4 × 10–12'],
+        ['Concentration Curl', 'Isolate one arm at a time', '3 × 12'],
+        ['Treadmill / Cycling', 'Moderate to high intensity', '20–30 mins']
+      ]
+    },
+    saturday: {
+      title: 'Saturday – Legs, Shoulders & CrossFit',
+      data: [
+        ['Deadlift', 'Flat back, push hips forward', '4 × 6–8'],
+        ['Leg Curl', 'Squeeze hamstrings', '4 × 12'],
+        ['Arnold Press', 'Rotate dumbbells while pressing', '4 × 10'],
+        ['CrossFit Circuit', 'Burpees, box jumps, battle rope', '15–20 mins']
+      ]
+    }
+  };
 
-<div class="controls">
-  <button class="btn" onclick="expandAll()">Expand all</button>
-  <button class="btn" onclick="collapseAll()">Collapse all</button>
-</div>
+  function showDay(day) {
+    document.getElementById('daysView').classList.add('hidden');
+    document.getElementById('workoutView').classList.remove('hidden');
+    document.getElementById('dayTitle').innerText = workouts[day].title;
+    const table = document.getElementById('workoutTable');
+    table.innerHTML = '';
+    workouts[day].data.forEach(row => {
+      table.innerHTML += `<tr><td>${row[0]}</td><td>${row[1]}</td><td>${row[2]}</td></tr>`;
+    });
+  }
 
-<main>
-
-<!-- MONDAY -->
-<details class="day-card" open>
-<summary class="day-row"><div class="day-title">Monday — Back Focus</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Full Workout</div>
-<table>
-<thead><tr><th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (s)</th><th>Notes</th></tr></thead>
-<tbody>
-<tr><td>Warmup</td><td>15</td><td>1</td><td>30</td><td>Neck Stretch, Shoulder Stretch, Tricep Stretch, Chest Opener, Torso Twist, Hip Rotation, Cross Toe Touch</td></tr>
-<tr><td>Bird Dog - Stability</td><td>15</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Warrior 1 - Yoga</td><td>10</td><td>1</td><td>30</td><td>Hold for 2–4 seconds</td></tr>
-<tr><td>Bulgarian Bag Side Swipe - Cross Fit</td><td>15</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>T-bar Rowing - Functional</td><td>12</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Wide Grip Pull Ups</td><td>5</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Lat Pull Down Wide Grip - Machine</td><td>12</td><td>3</td><td>30</td><td>On Machine</td></tr>
-<tr><td>Lat Pull Down Close Grip - Machine</td><td>12</td><td>3</td><td>30</td><td>On Machine</td></tr>
-<tr><td>Bend Over Rowing Barbell</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Bend Over Dumbbell Row (Single Arm)</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Chest Supported Dumbbell Rowing</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Dumbbell Reverse Fly</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Seated Cable Row (Machine)</td><td>12</td><td>3</td><td>30</td><td>On Machine</td></tr>
-</tbody>
-</table>
-</details>
-
-<!-- TUESDAY -->
-<details class="day-card">
-<summary class="day-row"><div class="day-title">Tuesday — Arms & Triceps</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Full Workout</div>
-<table><thead><tr><th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (s)</th><th>Notes</th></tr></thead><tbody>
-<tr><td>Warmup</td><td>10</td><td>1</td><td>30</td><td>Standard stretches</td></tr>
-<tr><td>Arm Circles - Flexibility</td><td>20</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Resistance Band Pull Apart</td><td>15</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Dead Bug - Core</td><td>10</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Tree Pose - Yoga</td><td>10</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Mudgal Lv1 - Crossfit</td><td>10</td><td>3</td><td>60</td><td>Level 1</td></tr>
-<tr><td>High Knees - Cardio</td><td>25</td><td>3</td><td>90</td><td></td></tr>
-<tr><td>Burpees with Pushup Variation</td><td>7</td><td>3</td><td>90</td><td></td></tr>
-<tr><td>Flat Bench Close Grip</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Tricep Push Down (Straight Rod)</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Overhead Triceps Extension</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Skull Crushers</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-</tbody></table>
-</details>
-
-<!-- WEDNESDAY -->
-<details class="day-card">
-<summary class="day-row"><div class="day-title">Wednesday — Biceps & Core</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Full Workout</div>
-<table><thead><tr><th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (s)</th><th>Notes</th></tr></thead><tbody>
-<tr><td>Warmup</td><td>10</td><td>1</td><td>30</td><td>Standard stretches</td></tr>
-<tr><td>Bird Dog - Stability</td><td>10</td><td>1</td><td>30</td><td>Slow stretch</td></tr>
-<tr><td>Upward Facing Dog Pose - Yoga</td><td>10</td><td>1</td><td>30</td><td>Hold 2–3s</td></tr>
-<tr><td>Leg Raise - Core</td><td>10</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Russian Twist - Core</td><td>15</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Battle Rope - Cardio</td><td>10</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Bicep Curls (Dumbbells)</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Preacher Curl Machine</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Concentration Curl</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Hammer Curls</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Dumbbell Reverse Grip Bicep Curl</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-</tbody></table>
-</details>
-
-<!-- THURSDAY -->
-<details class="day-card">
-<summary class="day-row"><div class="day-title">Thursday — Chest Focus</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Full Workout</div>
-<table><thead><tr><th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (s)</th><th>Notes</th></tr></thead><tbody>
-<tr><td>Warmup</td><td>10</td><td>1</td><td>30</td><td>Standard stretches</td></tr>
-<tr><td>Single Leg Balance Reach (Yoga)</td><td>10</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Mountain Climbers</td><td>25</td><td>3</td><td>60</td><td>25 each side</td></tr>
-<tr><td>Skipping</td><td>30</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Push Ups</td><td>15</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Flat Bench</td><td>12</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Incline Bench Dumbbell Press</td><td>12</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Dumbbell Bench Press - Chest</td><td>12</td><td>3</td><td>60</td><td>On flat bench</td></tr>
-<tr><td>Decline Bench Press</td><td>12</td><td>3</td><td>60</td><td></td></tr>
-<tr><td>Butterfly</td><td>12</td><td>3</td><td>60</td><td></td></tr>
-</tbody></table>
-</details>
-
-<!-- FRIDAY -->
-<details class="day-card">
-<summary class="day-row"><div class="day-title">Friday — Legs & Glutes</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Full Workout</div>
-<table><thead><tr><th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (s)</th><th>Notes</th></tr></thead><tbody>
-<tr><td>Warmup</td><td>10</td><td>1</td><td>30</td><td>Standard stretches</td></tr>
-<tr><td>Seated Forward Bend - Yoga</td><td>5</td><td>3</td><td>30</td><td>Hold 5s</td></tr>
-<tr><td>Flutter Kicks</td><td>30</td><td>1</td><td>30</td><td>Slowly</td></tr>
-<tr><td>Hurdles Jump - Crossfit</td><td>20</td><td>1</td><td>30</td><td>2 rounds per set</td></tr>
-<tr><td>Step Ups (Dumbbells)</td><td>20</td><td>3</td><td>90</td><td>Focus on quads</td></tr>
-<tr><td>Jump Squats</td><td>15</td><td>3</td><td>90</td><td>Jump high</td></tr>
-<tr><td>Lunges Forward</td><td>25</td><td>3</td><td>90</td><td></td></tr>
-<tr><td>Lunges Reverse</td><td>25</td><td>3</td><td>90</td><td></td></tr>
-<tr><td>Bulgarian Split Squats</td><td>25</td><td>3</td><td>90</td><td></td></tr>
-<tr><td>Squats on Barbell</td><td>15</td><td>3</td><td>90</td><td>Moderate weight</td></tr>
-<tr><td>Dumbbell Squats</td><td>15</td><td>3</td><td>90</td><td>Focus on quads</td></tr>
-<tr><td>Glute Bridge</td><td>15</td><td>3</td><td>90</td><td>Light weight</td></tr>
-<tr><td>Hip Thrusts</td><td>15</td><td>3</td><td>90</td><td></td></tr>
-<tr><td>Leg Extension (Machine)</td><td>15</td><td>3</td><td>90</td><td></td></tr>
-</tbody></table>
-</details>
-
-<!-- SATURDAY -->
-<details class="day-card">
-<summary class="day-row"><div class="day-title">Saturday — Shoulders & Cardio</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Full Workout</div>
-<table><thead><tr><th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (s)</th><th>Notes</th></tr></thead><tbody>
-<tr><td>Warmup</td><td>10</td><td>1</td><td>30</td><td>Standard warmup</td></tr>
-<tr><td>Sitting Butterfly Stretch</td><td>25</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Cobra Stretch</td><td>15</td><td>1</td><td>30</td><td>Hold few seconds</td></tr>
-<tr><td>Mudhgal Level 2 - Crossfit</td><td>5</td><td>1</td><td>30</td><td>Increase reps if possible</td></tr>
-<tr><td>Kettle Bell Swing</td><td>15</td><td>2</td><td>30</td><td></td></tr>
-<tr><td>Sled Push</td><td>10</td><td>2</td><td>30</td><td>15 kg+</td></tr>
-<tr><td>Frog Jumps</td><td>20</td><td>1</td><td>30</td><td></td></tr>
-<tr><td>Overhead Shoulder Press</td><td>12</td><td>3</td><td>30</td><td>Standing</td></tr
-<tr><td>Side Lateral Raise</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Seated Dumbbell Press</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Upright Row - Shoulder</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-<tr><td>Shrugs</td><td>12</td><td>3</td><td>30</td><td>With Dumbbells</td></tr>
-<tr><td>Face Pull - Functional</td><td>12</td><td>3</td><td>30</td><td></td></tr>
-</tbody></table>
-</details>
-
-<!-- SUNDAY -->
-<details class="day-card">
-<summary class="day-row"><div class="day-title">Sunday — Active Recovery / Rest Day</div><div class="toggle">Tap to open</div></summary>
-<div class="section-title">Active Recovery</div>
-<table>
-<thead><tr><th>Focus</th><th>Duration</th><th>Notes</th></tr></thead>
-<tbody>
-<tr><td>Light Stretching</td><td>10–15 min</td><td>Neck rolls, shoulder circles, hamstring stretches, chest opener</td></tr>
-<tr><td>Breathing / Yoga</td><td>10 min</td><td>Child’s Pose, Cat-Cow, or Downward Dog</td></tr>
-<tr><td>Walk / Mobility</td><td>20–30 min</td><td>Light walk, joint rotations, ankle/knee mobility work</td></tr>
-<tr><td>Hydration + Nutrition</td><td>—</td><td>Stay hydrated, eat protein-rich balanced meals</td></tr>
-<tr><td>Optional Core Stability</td><td>10 min</td><td>Bird Dog or Plank (if not sore)</td></tr>
-</tbody></table>
-</details>
-
-</main>
-
-<footer>Built for mobile — offline and gym-friendly. Tap to expand days. Track your workout efficiently.</footer>
-</div>
-
-<script>
-  function expandAll(){document.querySelectorAll('details').forEach(d=>d.open=true);}
-  function collapseAll(){document.querySelectorAll('details').forEach(d=>d.open=false);}
-</script>
-</body>
+  function goBack() {
+    document.getElementById('workoutView').classList.add('hidden');
+    document.getElementById('daysView').classList.remove('hidden');
+  }
+</script></body>
 </html>
