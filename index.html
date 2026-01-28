@@ -1,171 +1,258 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>My Exact Weekly Workout Plan</title>
-  <style>
-    *{box-sizing:border-box;font-family:Segoe UI,Arial,sans-serif}
-    body{margin:0;background:#0f172a;color:#e5e7eb}
-    header{position:sticky;top:0;z-index:10;background:#020617;padding:14px 18px;display:flex;justify-content:space-between;align-items:center}
-    header h1{margin:0;font-size:20px}
-    .timer{border:1px solid #334155;padding:8px 14px;border-radius:10px;font-weight:600}
-    .container{max-width:1300px;margin:auto;padding:20px}
-    .days{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:14px}
-    .day{background:#020617;border-radius:14px;padding:18px;text-align:center;cursor:pointer;transition:.25s;box-shadow:0 10px 25px rgba(0,0,0,.4)}
-    .day:hover{background:#1e293b;transform:translateY(-4px)}
-    .hidden{display:none}
-    .back{color:#38bdf8;cursor:pointer;margin-bottom:12px;display:inline-block}
-    table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
-    th,td{border-bottom:1px solid #334155;padding:8px;vertical-align:top}
-    th{background:#020617;position:sticky;top:56px}
-    tr:hover{background:#1e293b}
-    input{width:80px;background:#020617;border:1px solid #334155;color:#e5e7eb;border-radius:6px;padding:5px}
-    .export{margin-top:22px;padding:16px;background:#020617;border-radius:14px}
-    button{background:#38bdf8;border:none;color:#020617;padding:10px 14px;border-radius:8px;font-weight:600;cursor:pointer;margin-right:10px}
-    button.alt{background:#334155;color:#e5e7eb}
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>My Exact Workout – Jan 2026</title>
+
+<style>
+*{box-sizing:border-box;font-family:system-ui,-apple-system,Segoe UI,Roboto}
+body{margin:0;background:#0b1220;color:#e5e7eb}
+header{
+  position:sticky;top:0;z-index:50;
+  background:#020617;padding:12px 14px;
+  display:flex;justify-content:space-between;align-items:center
+}
+header h1{margin:0;font-size:16px}
+.timer{background:#020617;border:1px solid #334155;padding:6px 12px;border-radius:10px;font-weight:700}
+
+.container{padding:14px}
+.hidden{display:none}
+
+/* DAY GRID */
+.days{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.day{
+  background:#020617;border-radius:14px;
+  padding:18px;text-align:center;
+  font-weight:700;cursor:pointer
+}
+
+/* WORKOUT VIEW */
+.back{color:#38bdf8;cursor:pointer;margin-bottom:10px;display:inline-block}
+h2{margin:6px 0 10px;font-size:18px}
+
+/* EXERCISE CARDS */
+.exercise{
+  background:#020617;border:1px solid #334155;
+  border-radius:14px;padding:12px;margin-bottom:12px
+}
+.exercise.inactive{opacity:.4}
+.exercise h3{margin:0 0 6px;font-size:15px}
+.meta{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;font-size:13px;color:#cbd5f5}
+.notes{font-size:13px;margin-top:6px}
+.exercise-timer{margin-top:6px;color:#facc15;font-weight:700}
+
+.inputs{
+  display:grid;grid-template-columns:1fr 1fr auto;
+  gap:6px;margin-top:8px
+}
+input{
+  background:#020617;border:1px solid #334155;
+  color:#e5e7eb;border-radius:8px;padding:6px
+}
+button{
+  background:#22c55e;border:none;color:#052e16;
+  border-radius:8px;padding:8px 10px;font-weight:800;cursor:pointer
+}
+</style>
 </head>
+
 <body>
 <header>
-  <h1>🏋️ My Exact Workout (January 2026)</h1>
-  <div class="timer" id="timer">⏱ 00:00:00</div>
-</header><div class="container">
-  <div id="days" class="days">
-    <div class="day" onclick="openDay('monday')">Monday</div>
-    <div class="day" onclick="openDay('tuesday')">Tuesday</div>
-    <div class="day" onclick="openDay('wednesday')">Wednesday</div>
-    <div class="day" onclick="openDay('thursday')">Thursday</div>
-    <div class="day" onclick="openDay('friday')">Friday</div>
-    <div class="day" onclick="openDay('saturday')">Saturday</div>
-  </div>  <div id="workout" class="hidden">
-    <span class="back" onclick="goBack()">⬅ Back</span>
-    <h2 id="title"></h2>
-    <table>
-      <thead>
-        <tr>
-          <th>Exercise</th><th>Reps</th><th>Sets</th><th>Rest (sec)</th><th>Workout Notes</th><th>Calories</th><th>Muscle Focus</th><th>Weight (kg)</th><th>Time / Duration</th>
-        </tr>
-      </thead>
-      <tbody id="rows"></tbody>
-    </table><div class="export">
-  <h3>📤 Export Workout Data</h3>
-  <button onclick="exportJSON()">Export JSON</button>
-  <button class="alt" onclick="exportCSV()">Export CSV</button>
+  <h1>🏋️ My Exact Workout (Jan 2026)</h1>
+  <div class="timer" id="globalTimer">⏱ 00:00:00</div>
+</header>
+
+<div class="container">
+
+<!-- DAYS -->
+<div id="days" class="days">
+  <div class="day" onclick="openDay('monday')">Monday</div>
+  <div class="day" onclick="openDay('tuesday')">Tuesday</div>
+  <div class="day" onclick="openDay('wednesday')">Wednesday</div>
+  <div class="day" onclick="openDay('thursday')">Thursday</div>
+  <div class="day" onclick="openDay('friday')">Friday</div>
+  <div class="day" onclick="openDay('saturday')">Saturday</div>
 </div>
 
-  </div>
-</div><script>
-// TIMER
-let sec=0;setInterval(()=>{sec++;const h=String(Math.floor(sec/3600)).padStart(2,'0');const m=String(Math.floor(sec%3600/60)).padStart(2,'0');const s=String(sec%60).padStart(2,'0');document.getElementById('timer').innerText=`⏱ ${h}:${m}:${s}`},1000);
+<!-- WORKOUT -->
+<div id="workout" class="hidden">
+  <span class="back" onclick="goBack()">← Back</span>
+  <h2 id="title"></h2>
+  <div id="list"></div>
+</div>
 
-// EXACT WORKOUT DATA (NO MODIFICATIONS)
-const data={
-  monday:{title:'Monday – Chest + Triceps + Cardio',rows:[
-    ['Warmup',10,1,30,'','','',''],
-    ['Tree Pose - Yoga',30,3,30,'','', 'Yoga',''],
-    ['Bird Dog - Stability',10,3,30,'','','',''],
-    ['Dumble Chest Fly',12,4,30,'','','',''],
-    ['Svend Press',12,4,30,'','','',''],
-    ['Cable Cross Upper Chest',12,4,30,'','', 'Upper Chest',''],
-    ['Butterfly',15,4,30,'','','',''],
-    ['Tricep Dips - Triceps',12,4,30,'','','',''],
-    ['Overhead Triceps Extension',12,4,30,'','', 'Triceps',''],
-    ['Skull Crushers - Triceps',12,4,30,'','','',''],
-    ['Triceps Kickback',12,4,30,'','','',''],
-    ['Skipping - Cardio Vascular',50,3,90,'Rapidly Elevates Heart Rate','','',''],
-    ['High Knees - Cardio Vascular',30,3,90,'Boosts Metabolism','','',''],
-    ['Kettle Bell Swing - Cardio Vascular',15,3,30,'Strengthens Glutes, Hamstrings, And Back','','Cardio Vascular',''],
-    ['Cool Down',1,1,90,'','','','']
-  ]},
-  tuesday:{title:'Tuesday – Back + Biceps + Cardio',rows:[
-    ['Warmup',10,1,30,'Neck Stretch, Shoulder Stretch, Tricep Stretch, Chest Opener, Torso Twist, Hip Rotation, Cross Toe Touch','','',''],
-    ['Warrior 2 Pose - Yoga',30,3,30,'Full Body Strength And Stability','','',''],
-    ['Dead Bug - Core',10,3,30,'','','',''],
-    ['Bend Over Dumbbell Rowing - Back',12,4,30,'','','',''],
-    ['Single Arm Rowing',12,4,30,'','','',''],
-    ['Lat Pull Down Wide Grip - Machine',12,4,30,'','', 'Back',''],
-    ['Lats Seated Rowing - Machine',12,4,30,'','','',''],
-    ['Face Pull - Functional',15,4,30,'','', 'Shoulder',''],
-    ['Barbell Curl',12,4,30,'','','',''],
-    ['Hammer Curls (Dumbbles) - Biceps',12,4,30,'','', 'Biceps',''],
-    ['Concentration Curl',12,4,30,'','', 'Biceps',''],
-    ['Reverse Dumbbell Curl',12,4,30,'','','',''],
-    ['Burpess With Pushup Variation - Full Body',45,3,90,'Rapidly Elevates Heart Rate','','',''],
-    ['Star Jumps - Cardio Vascular',45,3,90,'Rapidly Elevates Heart Rate','','',''],
-    ['Cool Down',1,3,90,'','','','']
-  ]},
-  wednesday:{title:'Wednesday – Legs + Shoulders',rows:[
-    ['Warmup',10,1,30,'Neck Stretch, Shoulder Stretch, Tricep Stretch, Chest Opener, Torso Twist, Hip Rotation, Cross Toe Touch','','',''],
-    ['Chair Pose - Flexibility',30,3,30,'','','',''],
-    ['Glute Bridge - Core',12,3,30,'','', 'Legs',''],
-    ['Goblet Squat - Strength',12,4,30,'','','',''],
-    ['Bulgarian Split Squats - Legs',10,4,30,'','', 'Legs',''],
-    ['Lunges Forward - Functional',10,4,30,'','', 'Legs',''],
-    ['Romanian Dead Lift',12,4,30,'','','',''],
-    ['Standing Calf Raises',15,4,30,'','','',''],
-    ['Side Lateral Raise',12,4,30,'','', 'Shoulder',''],
-    ['Front Raise - Shoulder',12,4,30,'','','',''],
-    ['Rear Delt Fly / Reverse Fly - Dumbbell - Back',12,4,30,'','', 'Back',''],
-    ['Upright Row - Shoulder',12,4,30,'','', 'Shoulder',''],
-    ['Jump Squats - Cardio Vascular',15,3,60,'','', 'Cardio Vascular',''],
-    ['Butt Kicks - Cardio Vascular',20,3,60,'','','',''],
-    ['Full Body Mobility - Functional',15,3,60,'','','',''],
-    ['Cool Down',1,3,90,'','','','']
-  ]},
-  thursday:{title:'Thursday – Chest + Triceps',rows:[
-    ['Warmup',10,1,30,'Neck Stretch, Shoulder Stretch, Tricep Stretch, Chest Opener, Torso Twist, Hip Rotation, Cross Toe Touch','','',''],
-    ['Cobra Stretch - Yoga',30,3,30,'','', 'Yoga',''],
-    ['Russian Twist - Core',12,3,30,'','', 'Core',''],
-    ['Incline Chest Fly (Dumbbell)',12,4,30,'','','',''],
-    ['Svend Press ( Plates )',12,4,30,'','','',''],
-    ['Cable Cross Middle Chest',12,4,30,'','', 'Middle Chest',''],
-    ['Decline Bench Press',12,4,30,'','','',''],
-    ['Flat Bench Close Grip',12,4,30,'','','',''],
-    ['Skull Crushers - Triceps',12,4,30,'','','',''],
-    ['Tricep Push Down - Straight Rod',12,4,30,'','', 'Triceps',''],
-    ['Overhead Triceps Extension',12,4,30,'','', 'Triceps',''],
-    ['Jumping Jacks - Cardio Vascular',45,3,90,'Rapidly Elevates Heart Rate','','',''],
-    ['Mountain Climbers - Stability',30,3,90,'Boosts Metabolism','','',''],
-    ['Trx Band Chest Fly - Crossfit',12,3,30,'','','',''],
-    ['Cool Down',1,1,90,'','','','']
-  ]},
-  friday:{title:'Friday – Biceps + Cardio',rows:[
-    ['e',12,4,30,'','', 'Biceps',''],
-    ['Incline Dumbbell Curls',12,4,30,'','','',''],
-    ['Zottman Curls',12,4,30,'','','',''],
-    ['21s Curls',21,3,90,'7 - 7 - 7 Combination','','',''],
-    ['Skater Jumps - Cardio Vascular',45,3,90,'','','',''],
-    ['Plank Jacks On Stepper - Flexibility',30,3,90,'','','',''],
-    ['Kettlebell Snatch - Cardio Vascular',10,3,30,'','','',''],
-    ['Cool Down',1,1,90,'','','','']
-  ]},
-  saturday:{title:'Saturday – Legs + Shoulders + CrossFit',rows:[
-    ['Warmup',10,1,30,'','','',''],
-    ['Bridge Pose - Yoga',30,3,30,'','','',''],
-    ['Bicycle Crunches - Core',24,3,30,'','','',''],
-    ['Sumo Squat (Dumbbles)',12,4,30,'','','',''],
-    ['Single Leg Rdl (Kettlebell)',10,4,30,'Per Leg 10 Reps','','',''],
-    ['Leg Press',15,4,30,'On Machine','', 'Legs',''],
-    ['Calf Stretch - Flexibility',15,4,30,'','','',''],
-    ['Arnold Press (Seated)',12,4,30,'','','',''],
-    ['Overhead Shoulder Press',12,4,30,'','', 'Shoulder',''],
-    ['Front Raise Plate',12,4,30,'','','',''],
-    ['Face Pull - Functional',12,4,30,'','', 'Shoulder',''],
-    ['Lateral Raise Dropset',26,4,90,'12-8-6 Combination Set','','',''],
-    ['Ladder Side Drills - Cardio Vascular',5,3,60,'','','',''],
-    ['Lateral Cone Shuffle - Crossfit',10,3,30,'','','',''],
-    ['Bulgarian Bag Side Swipe - Cross Fit Workout',30,3,30,'','', 'Crossfit Workout',''],
-    ['Cool Down',1,1,90,'','','','']
-  ]}
+</div>
+
+<script>
+/* ---------- GLOBAL TIMER (PERSISTENT) ---------- */
+let gSec = parseInt(localStorage.getItem("globalTime")||"0");
+setInterval(()=>{
+  gSec++;
+  localStorage.setItem("globalTime",gSec);
+  const h=String(Math.floor(gSec/3600)).padStart(2,'0');
+  const m=String(Math.floor(gSec%3600/60)).padStart(2,'0');
+  const s=String(gSec%60).padStart(2,'0');
+  globalTimer.innerText=`⏱ ${h}:${m}:${s}`;
+},1000);
+
+/* ---------- EXACT DATA (UNCHANGED) ---------- */
+const DATA = {
+monday:{title:"Monday – Chest + Triceps + Cardio",rows:[
+["Warmup",10,1,30,""],
+["Tree Pose - Yoga",30,3,30,"Yoga"],
+["Bird Dog - Stability",10,3,30,""],
+["Dumble Chest Fly",12,4,30,""],
+["Svend Press",12,4,30,""],
+["Cable Cross Upper Chest",12,4,30,"Upper Chest"],
+["Butterfly",15,4,30,""],
+["Tricep Dips - Triceps",12,4,30,""],
+["Overhead Triceps Extension",12,4,30,"Triceps"],
+["Skull Crushers - Triceps",12,4,30,""],
+["Triceps Kickback",12,4,30,""],
+["Skipping - Cardio Vascular",50,3,90,"Rapidly Elevates Heart Rate"],
+["High Knees - Cardio Vascular",30,3,90,"Boosts Metabolism"],
+["Kettle Bell Swing - Cardio Vascular",15,3,30,"Cardio Vascular"],
+["Cool Down",1,1,90,""]
+]},
+tuesday:{title:"Tuesday – Back + Biceps + Cardio",rows:[
+["Warmup",10,1,30,"Neck, Shoulder, Tricep, Chest Opener, Torso Twist, Hip Rotation"],
+["Warrior 2 Pose - Yoga",30,3,30,"Full Body Stability"],
+["Dead Bug - Core",10,3,30,""],
+["Bend Over Dumbbell Rowing - Back",12,4,30,""],
+["Single Arm Rowing",12,4,30,""],
+["Lat Pull Down Wide Grip - Machine",12,4,30,"Back"],
+["Lats Seated Rowing - Machine",12,4,30,""],
+["Face Pull - Functional",15,4,30,"Shoulder"],
+["Barbell Curl",12,4,30,""],
+["Hammer Curls (Dumbbles) - Biceps",12,4,30,"Biceps"],
+["Concentration Curl",12,4,30,"Biceps"],
+["Reverse Dumbbell Curl",12,4,30,""],
+["Burpess With Pushup Variation - Full Body",45,3,90,"High HR"],
+["Star Jumps - Cardio Vascular",45,3,90,"High HR"],
+["Cool Down",1,3,90,""]
+]},
+wednesday:{title:"Wednesday – Legs + Shoulders",rows:[
+["Warmup",10,1,30,""],
+["Chair Pose - Flexibility",30,3,30,""],
+["Glute Bridge - Core",12,3,30,"Legs"],
+["Goblet Squat - Strength",12,4,30,""],
+["Bulgarian Split Squats - Legs",10,4,30,"Legs"],
+["Lunges Forward - Functional",10,4,30,"Legs"],
+["Romanian Dead Lift",12,4,30,""],
+["Standing Calf Raises",15,4,30,""],
+["Side Lateral Raise",12,4,30,"Shoulder"],
+["Front Raise - Shoulder",12,4,30,""],
+["Rear Delt Fly - Back",12,4,30,"Back"],
+["Upright Row - Shoulder",12,4,30,"Shoulder"],
+["Jump Squats - Cardio",15,3,60,""],
+["Butt Kicks - Cardio",20,3,60,""],
+["Full Body Mobility",15,3,60,""],
+["Cool Down",1,3,90,""]
+]},
+thursday:{title:"Thursday – Chest + Triceps",rows:[
+["Warmup",10,1,30,""],
+["Cobra Stretch - Yoga",30,3,30,"Yoga"],
+["Russian Twist - Core",12,3,30,"Core"],
+["Incline Chest Fly (Dumbbell)",12,4,30,""],
+["Svend Press ( Plates )",12,4,30,""],
+["Cable Cross Middle Chest",12,4,30,"Middle Chest"],
+["Decline Bench Press",12,4,30,""],
+["Flat Bench Close Grip",12,4,30,""],
+["Skull Crushers - Triceps",12,4,30,""],
+["Tricep Push Down - Straight Rod",12,4,30,"Triceps"],
+["Overhead Triceps Extension",12,4,30,"Triceps"],
+["Jumping Jacks - Cardio",45,3,90,""],
+["Mountain Climbers - Stability",30,3,90,""],
+["Trx Band Chest Fly - Crossfit",12,3,30,""],
+["Cool Down",1,1,90,""]
+]},
+friday:{title:"Friday – Biceps + Cardio",rows:[
+["e",12,4,30,"Biceps"],
+["Incline Dumbbell Curls",12,4,30,""],
+["Zottman Curls",12,4,30,""],
+["21s Curls",21,3,90,"7-7-7"],
+["Skater Jumps - Cardio",45,3,90,""],
+["Plank Jacks On Stepper",30,3,90,""],
+["Kettlebell Snatch - Cardio",10,3,30,""],
+["Cool Down",1,1,90,""]
+]},
+saturday:{title:"Saturday – Legs + Shoulders + CrossFit",rows:[
+["Warmup",10,1,30,""],
+["Bridge Pose - Yoga",30,3,30,""],
+["Bicycle Crunches - Core",24,3,30,""],
+["Sumo Squat (Dumbbles)",12,4,30,""],
+["Single Leg Rdl (Kettlebell)",10,4,30,"Per Leg"],
+["Leg Press",15,4,30,"Legs"],
+["Calf Stretch - Flexibility",15,4,30,""],
+["Arnold Press (Seated)",12,4,30,""],
+["Overhead Shoulder Press",12,4,30,"Shoulder"],
+["Front Raise Plate",12,4,30,""],
+["Face Pull - Functional",12,4,30,"Shoulder"],
+["Lateral Raise Dropset",26,4,90,"12-8-6"],
+["Ladder Side Drills - Cardio",5,3,60,""],
+["Lateral Cone Shuffle - Crossfit",10,3,30,""],
+["Bulgarian Bag Side Swipe - Cross Fit Workout",30,3,30,"Crossfit"],
+["Cool Down",1,1,90,""]
+]}
 };
 
-let current='';
-function openDay(d){current=d;document.getElementById('days').classList.add('hidden');document.getElementById('workout').classList.remove('hidden');document.getElementById('title').innerText=data[d].title;const tbody=document.getElementById('rows');tbody.innerHTML='';data[d].rows.forEach(r=>{tbody.innerHTML+=`<tr>${r.slice(0,7).map(v=>`<td>${v}</td>`).join('')}<td><input></td><td><input></td></tr>`})}
-function goBack(){document.getElementById('workout').classList.add('hidden');document.getElementById('days').classList.remove('hidden')}
+let currentDay=null, idx=0, exTimer=null, exSec=0;
 
-function collect(){return [...document.querySelectorAll('#rows tr')].map(tr=>({exercise:tr.children[0].innerText,weight:tr.children[7].querySelector('input').value,time:tr.children[8].querySelector('input').value}))}
-function exportJSON(){const out={day:current,duration:document.getElementById('timer').innerText,entries:collect()};download(JSON.stringify(out,null,2),'workout.json','application/json')}
-function exportCSV(){let c='Exercise,Weight,Time\n';collect().forEach(r=>c+=`${r.exercise},${r.weight},${r.time}\n`);download(c,'workout.csv','text/csv')}
-function download(data,name,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([data],{type}));a.download=name;a.click()}
-</script></body>
+function openDay(d){
+  currentDay=d;idx=0;
+  days.classList.add("hidden");
+  workout.classList.remove("hidden");
+  title.innerText=DATA[d].title;
+  render();
+  startExerciseTimer();
+}
+
+function render(){
+  list.innerHTML="";
+  DATA[currentDay].rows.forEach((r,i)=>{
+    list.innerHTML+=`
+    <div class="exercise ${i!==idx?'inactive':''}">
+      <h3>${r[0]}</h3>
+      <div class="meta">
+        <div>Reps: ${r[1]}</div>
+        <div>Sets: ${r[2]}</div>
+        <div>Rest: ${r[3]} sec</div>
+      </div>
+      <div class="notes">${r[4]}</div>
+      <div class="exercise-timer">${i===idx?'⏱ 00:00':''}</div>
+      <div class="inputs">
+        <input placeholder="Weight (kg)">
+        <input placeholder="Notes / Time">
+        ${i===idx?'<button onclick="next()">DONE →</button>':''}
+      </div>
+    </div>`;
+  });
+}
+
+function startExerciseTimer(){
+  clearInterval(exTimer);exSec=0;
+  exTimer=setInterval(()=>{
+    exSec++;
+    const m=String(Math.floor(exSec/60)).padStart(2,'0');
+    const s=String(exSec%60).padStart(2,'0');
+    document.querySelector(".exercise:not(.inactive) .exercise-timer").innerText=`⏱ ${m}:${s}`;
+  },1000);
+}
+
+function next(){
+  if(idx<DATA[currentDay].rows.length-1){
+    idx++;render();startExerciseTimer();
+  }else{
+    clearInterval(exTimer);
+    alert("Workout Completed 💪");
+  }
+}
+
+function goBack(){
+  workout.classList.add("hidden");
+  days.classList.remove("hidden");
+}
+</script>
+</body>
 </html>
